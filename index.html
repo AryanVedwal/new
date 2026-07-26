@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date & Time Display</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem 4rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .date {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            letter-spacing: 1px;
+        }
+
+        .time {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .time .separator {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .day {
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="date" id="dateDisplay"></div>
+        <div class="time" id="timeDisplay"></div>
+        <div class="day" id="dayDisplay"></div>
+    </div>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+
+            // Format date: "January 15, 2025"
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = now.toLocaleDateString('en-US', options);
+
+            // Format time: "HH:MM:SS" with blinking colons handled by CSS
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeStr = `${hours}<span class="separator">:</span>${minutes}<span class="separator">:</span>${seconds}`;
+
+            // Get day of the week
+            const dayStr = now.toLocaleDateString('en-US', { weekday: 'long' });
+
+            document.getElementById('dateDisplay').textContent = dateStr;
+            document.getElementById('timeDisplay').innerHTML = timeStr;
+            document.getElementById('dayDisplay').textContent = dayStr;
+        }
+
+        // Update immediately, then every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+</body>
+</html>
+
