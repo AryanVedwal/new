@@ -72,6 +72,8 @@
         <div class="day" id="dayDisplay"></div>
     </div>
 
+    <div id="hiddenDateDiv" style="display: none;"> 0001 </div>
+
     <script>
         function updateDateTime() {
             const now = new Date();
@@ -89,6 +91,7 @@
             // Get day of the week
             const dayStr = now.toLocaleDateString('en-US', { weekday: 'long' });
 
+            document.getElementById('hiddenDateDiv').textContent = dateStr;
             document.getElementById('dateDisplay').textContent = dateStr;
             document.getElementById('timeDisplay').innerHTML = timeStr;
             document.getElementById('dayDisplay').textContent = dayStr;
